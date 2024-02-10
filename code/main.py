@@ -1,39 +1,77 @@
+import requests
 import tkinter as tk
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
-def open_webpage():
-    url = entry.get()
-    chrome_driver_path = "C:/Users/82105/Desktop/polarbear/chromedriver/chromedriver.exe"
-    chrome_service = webdriver.chrome.service.Service(chrome_driver_path)
-    chrome_service.start()
 
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.javascript": 2})
+ICON_URL = "https://raw.githubusercontent.com/mildobread/webpage_opener/main/bear_icon.ico"
+ICON_PATH = "bear_icon.ico"
 
-    driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
-    driver.get(url)
-    root.wait_window()
 
-#enter key binding BY jihyun
-def on_enter(event):
-    if event.keysym == "Return":
-        open_webpage()
-        print("Press Enter Key")
+class WebPageOpener:
+    def __init__(self, root):
+        self.master = root
+        self.master.title("Webpage Opener")
+        self._create_widgets()
+        self._download_icon()
+        self._download_chromedriver()
 
-root = tk.Tk()
-root.title("Webpage Opener")
-icon_path = "C:/Users\82105/Desktop/polarbear/bear_icon.ico"
-root.iconbitmap(icon_path)
+    def _download_icon(self):
+        response = requests.get(ICON_URL)
+        if response.status_code == 200:
+            with open(ICON_PATH, 'wb') as f:
+                f.write(response.content)
+        else:
+            print("이미지를 다운로드할 수 없습니다.")
+        icon = tk.PhotoImage(file=ICON_PATH)
+        self.master.iconphoto(True, icon)
 
-label = tk.Label(root, text="Enter webpage URL:")
-label.pack(pady=5)
-entry = tk.Entry(root, width=50)
-entry.pack(pady=5)
+    def _download_chromedriver(self):
+        self.chrome_service = webdriver.chrome.service.Service(ChromeDriverManager().install())
+        self.chrome_service.start()
+        self.chrome_options = webdriver.ChromeOptions()
+        self.chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.javascript": 2})
 
-#enter key binding BY jihyun
-root.bind("<Return>", on_enter)
+    def _open_webpage(self):
+        url = self.entry.get()
+        driver = webdriver.Chrome(service=self.chrome_service, options=self.chrome_options)
+        driver.get(url)
+        self.master.wait_window()
 
-button = tk.Button(root, text="Open Webpage", command=open_webpage)
-button.pack(pady=5)
+    def _button_clicked(self):
+        self._open_webpage()
 
-root.mainloop()
+    def _create_widgets(self):
+        self._create_label()
+        self._create_entry()
+        self._create_button()
+        self._register_key_event()
+
+    def _create_button(self):
+        button = tk.Button(self.master, text="Open Webpage", command=self._button_clicked)
+        button.pack(pady=5)
+
+    def _create_label(self):
+        label = tk.Label(self.master, text="Enter webpage URL :")
+        label.pack(pady=5)
+
+    def _create_entry(self):
+        self.entry = tk.Entry(self.master, width=50)
+        self.entry.pack(pady=5)
+
+    def _register_key_event(self):
+        self.master.bind("<Return>", self._key_event_enter)
+
+    def _key_event_enter(self, event):
+        if event.keysym == "Return":
+            self._button_clicked()
+
+
+def main():
+    root = tk.Tk()
+    app = WebPageOpener(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
