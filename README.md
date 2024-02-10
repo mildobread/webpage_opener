@@ -4,4 +4,4 @@
 https://googlechromelabs.github.io/chrome-for-testing/#stable
 
 들어가서 os에 맞는 chromedriver로 링크 복사해서 다운로드하면 다운로드 폴더에 받아질텐데,
-압축 풀어서 webpage_opener.exe가 있는 폴더에다가 chromedriver랑 LICENSE.chromedriver 파일을 교체해주면됨.
+압축 풀어서 chromedriver폴더 안에 chromedriver.exe랑 LICENSE.chromedriver 파일을 교체해주면됨.
