@@ -5,8 +5,8 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-ICON_URL = "https://raw.githubusercontent.com/mildobread/webpage_opener/main/bear_icon.ico"
-ICON_PATH = "bear_icon.ico"
+ICON_URL = "https://raw.githubusercontent.com/mildobread/webpage_opener/main/bear_icon.png"
+ICON_PATH = "bear_icon.png"
 
 
 class WebPageOpener:
