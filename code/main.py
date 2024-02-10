@@ -5,14 +5,14 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-ICON_URL = "https://raw.githubusercontent.com/mildobread/webpage_opener/main/bear_icon.png"
+ICON_URL = "https://github.com/mildobread/webpage_opener/blob/main/bear_icon.png?raw=true"
 ICON_PATH = "bear_icon.png"
 
 
 class WebPageOpener:
     def __init__(self, root):
         self.master = root
-        self.master.title("Webpage Opener")
+        self.master.title("HeavyChild")
         self._create_widgets()
         self._download_icon()
         self._download_chromedriver()
@@ -28,10 +28,12 @@ class WebPageOpener:
         self.master.iconphoto(True, icon)
 
     def _download_chromedriver(self):
+        print("chromedriver downloading...")
         self.chrome_service = webdriver.chrome.service.Service(ChromeDriverManager().install())
         self.chrome_service.start()
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.javascript": 2})
+        print("chromedriver download is finished!")
 
     def _open_webpage(self):
         url = self.entry.get()
@@ -43,6 +45,7 @@ class WebPageOpener:
         self._open_webpage()
 
     def _create_widgets(self):
+        print("creating widgets...")
         self._create_label()
         self._create_entry()
         self._create_button()

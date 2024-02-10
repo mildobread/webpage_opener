@@ -1,1 +1,1 @@
-pyinstaller -F -w -n=Webpage_Opener --icon=C:\Users\82105\Desktop\polarbear\bear_icon.ico code\main.py
+pyinstaller -F -w -n=HeavyChild --icon=bear_icon.ico code\main.py
