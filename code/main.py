@@ -84,7 +84,7 @@ class ChromeDriver:
         cls.chrome_service.start()
         cls.chrome_options = webdriver.ChromeOptions()
         cls.chrome_options.add_experimental_option("prefs", {
-            "profile.managed_default_content_settings.javascript": 1
+            "profile.managed_default_content_settings.javascript": 2
         })
         print("chromedriver download is finished!")
 
