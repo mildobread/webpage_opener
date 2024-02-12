@@ -1,1 +1,1 @@
-pyinstaller -F -w -n=HeavyChild --icon=bear_icon.ico code\main.py
+pyinstaller -F -w -n=HeavyChild --icon=bear_icon.ico --console code\main.py
